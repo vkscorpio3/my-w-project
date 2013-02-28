@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/Publishing/base/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/B2BCommerce/lib/resources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/B2BCommerce/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DCS/lib/resources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DCS/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/Portal/paf/framework/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DSS/lib/resources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DSS/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DPS/lib/resources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DPS/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Index/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Index/lib/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Index/lib/commons-discovery.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Index/lib/jaxrpc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Index/lib/wsdl4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Base/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAF/Search/Base/lib/rmi-stub-classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS-UI/lib/uiresources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS-UI/lib/uiclasses.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS-UI/lib/jhall.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS/lib/resources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS/lib/classes.jar" sourcepath="C:/ATG/ATG9.0/DAS/lib/classes.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS/lib/servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS/lib/ice.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/ATG/ATG9.0/DAS/solid/SolidDriver2.1.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="src/com/helper/mail-1.3.3.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="lib" path="jar/velocity-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/velocity-dep-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="j2ee-apps/MyWalgreenProject/MyWalgreenProject.war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
