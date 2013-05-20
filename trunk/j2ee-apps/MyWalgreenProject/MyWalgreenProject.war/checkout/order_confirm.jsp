@@ -46,6 +46,9 @@
          <dsp:droplet name="Switch">
          <dsp:param name="value" param="paymentGroup.paymentMethod"/>
          <dsp:oparam name="creditCard">
+         	<dsp:valueof param="paymentGroup.billingAddress.firstName"/> &nbsp;
+         	<dsp:valueof param="paymentGroup.billingAddress.middleName"/>&nbsp;
+         	<dsp:valueof param="paymentGroup.billingAddress.lastName"/>&nbsp;,
            	<dsp:valueof param="paymentGroup.billingAddress.address1"/>,
             <dsp:valueof param="paymentGroup.billingAddress.city"/>,
    	 		<dsp:valueof param="paymentGroup.billingAddress.state"/>,
@@ -54,8 +57,8 @@
             <hr/>
             <b style="color: red;">Credit Card:</b> <br/>
 			<dsp:valueof param="paymentGroup.creditCardType"/> ,
-            <dsp:valueof converter="creditcard" param="paymentGroup.creditCardNumber"/>
-
+            <dsp:valueof converter="creditcard" param="paymentGroup.creditCardNumber"/>, Exp.:
+			<dsp:valueof param="paymentGroup.expirationMonth"/>/<dsp:valueof param="paymentGroup.expirationYear"/>
           </dsp:oparam>
           <dsp:oparam name="giftCertificate">
             Gift Certificate: <dsp:valueof param="paymentGroup.giftCertificateNumber"/><BR>
@@ -93,7 +96,10 @@
   <dsp:param name="value" param="ShippingGroup.shippingGroupClassType"/>
   <dsp:oparam name="hardgoodShippingGroup"> 
     <b style="color: red;">Ship to:</b><br>   
-  <dsp:valueof param="ShippingGroup.shippingAddress.address1"/>,
+    <dsp:valueof param="ShippingGroup.shippingAddress.firstName"/>&nbsp;
+    <dsp:valueof param="ShippingGroup.shippingAddress.middleName"/>&nbsp;
+    <dsp:valueof param="ShippingGroup.shippingAddress.lastName"/>&nbsp;&nbsp;,
+  	<dsp:valueof param="ShippingGroup.shippingAddress.address1"/>,
 	<dsp:valueof param="ShippingGroup.shippingAddress.city"/>,
     <dsp:valueof param="ShippingGroup.shippingAddress.state"/>,
     <dsp:valueof param="ShippingGroup.shippingAddress.postalCode"/>,
