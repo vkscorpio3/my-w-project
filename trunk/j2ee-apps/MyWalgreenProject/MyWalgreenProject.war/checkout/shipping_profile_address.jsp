@@ -1,48 +1,38 @@
 <dsp:form>
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.firstName"
-										beanvalue="Profile.shippingAddress.firstName" size="30"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.middleName"
-										beanvalue="Profile.shippingAddress.middleName" size="15"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.lastName"
-										beanvalue="Profile.shippingAddress.lastName" size="30"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.address1"
-										beanvalue="Profile.shippingAddress.address1" size="40"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.address2"
-										size="40" type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.address2"
-										beanvalue="Profile.shippingAddress.address2" size="40"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.city"
-										beanvalue="Profile.shippingAddress.city" size="20"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
-										beanvalue="Profile.shippingAddress.state" size="10"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.postalCode"
-										beanvalue="Profile.shippingAddress.postalCode" size="10"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.country"
-										beanvalue="Profile.shippingAddress.country" size="20"
-										type="hidden" />
-									<dsp:input
-										bean="ShoppingCartModifier.shippingGroup.shippingAddress.ownerId"
-										beanvalue="Profile.shippingAddress.ownerId" size="20"
-										type="text" />
-									<%-- 	
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.firstName"
+		beanvalue="Profile.shippingAddress.firstName" size="30" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.middleName"
+		beanvalue="Profile.shippingAddress.middleName" size="15" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.lastName"
+		beanvalue="Profile.shippingAddress.lastName" size="30" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.address1"
+		beanvalue="Profile.shippingAddress.address1" size="40" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.address2"
+		size="40" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.address2"
+		beanvalue="Profile.shippingAddress.address2" size="40" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.city"
+		beanvalue="Profile.shippingAddress.city" size="20" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
+		beanvalue="Profile.shippingAddress.state" size="10" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.postalCode"
+		beanvalue="Profile.shippingAddress.postalCode" size="10" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.country"
+		beanvalue="Profile.shippingAddress.country" size="20" type="hidden" />
+	<dsp:input
+		bean="ShoppingCartModifier.shippingGroup.shippingAddress.ownerId"
+		beanvalue="Profile.shippingAddress.ownerId" size="20" type="text" />
+	<%-- 	
 										<dsp:select
 											bean="ShoppingCartModifier.shippingGroup.shippingMethod">
 											<dsp:droplet name="ForEach">
@@ -60,4 +50,4 @@
 											</dsp:droplet>
 										</dsp:select>
 									--%>
-								</dsp:form>
+</dsp:form>

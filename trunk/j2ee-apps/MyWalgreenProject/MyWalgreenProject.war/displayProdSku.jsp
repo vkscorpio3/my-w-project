@@ -168,7 +168,8 @@
 											</dsp:droplet></td>
 											<td><dsp:valueof param="sku.id" /></td>
 											<td><dsp:valueof param="sku.displayName" /></td>
-											<td><dsp:valueof  converter="currency" param="sku.listPrice" /></td>
+											<td><dsp:valueof converter="currency"
+												param="sku.listPrice" /></td>
 											<td>
 											<table border="1">
 												<dsp:form action="cart.jsp" formid="cart" method="post">
@@ -183,7 +184,7 @@
 
 														<dsp:input bean="CartModifierFormHandler.catalogRefIds"
 															type="hidden" paramvalue="sku.listPrice" name="price" />
-															
+
 														<dsp:droplet name="/atg/dynamo/droplet/ForEach">
 															<dsp:param name="array" param="sku.parentProducts" />
 															<dsp:param value="parentProd" name="elementName" />
@@ -191,8 +192,7 @@
 																<dsp:input bean="CartModifierFormHandler.ProductId"
 																	type="hidden" paramvalue="parentProd.id" name="prodId" />
 															</dsp:oparam>
-														</dsp:droplet> 
-														<dsp:input bean="CartModifierFormHandler.catalogRefIds"
+														</dsp:droplet> <dsp:input bean="CartModifierFormHandler.catalogRefIds"
 															type="hidden" paramvalue="sku.id" name="skuId" /> <dsp:input
 															bean="CartModifierFormHandler.addItemToOrder"
 															value="Add to Cart" type="submit" /></td>
@@ -212,7 +212,6 @@
 					</dsp:droplet>
 				</dsp:oparam>
 			</dsp:droplet>
-
 		</dsp:oparam>
 	</dsp:droplet></div>
 	</center>

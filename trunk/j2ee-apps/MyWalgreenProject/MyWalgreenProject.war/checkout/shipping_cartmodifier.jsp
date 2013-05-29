@@ -1,6 +1,6 @@
 <%@ taglib uri="/dspTaglib" prefix="dsp"%>
 <dsp:page>
-<title>Shipping Option and Address</title>
+	<title>Shipping Option and Address</title>
 	<dsp:importbean bean="/atg/userprofiling/Profile" />
 	<dsp:importbean bean="/atg/dynamo/droplet/IsEmpty" />
 	<dsp:importbean bean="/atg/dynamo/droplet/IsNull" />
@@ -9,7 +9,8 @@
 	<dsp:importbean bean="/atg/userprofiling/Profile" />
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
-	<dsp:importbean	bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
+	<dsp:importbean
+		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
 	<dsp:importbean bean="/atg/commerce/pricing/UserPricingModels" />
 	<dsp:importbean bean="/atg/commerce/pricing/AvailableShippingMethods" />
 	<dsp:importbean
@@ -35,7 +36,8 @@
 		</dsp:oparam>
 	</dsp:droplet></h2>
 
-	<table border=1 cellpadding=4 cellspacing=10 width=50% align="center" bgcolor="#F0E68C" bordercolor="#1E90FF">
+	<table border=1 cellpadding=4 cellspacing=10 width=50% align="center"
+		bgcolor="#F0E68C" bordercolor="#1E90FF">
 		<!--<tr bgcolor=#DBDBDB>
 			<td><b style="color: blue">Login ID</b></td>
 			<td><dsp:valueof bean="Profile.id" /></td>
@@ -50,7 +52,7 @@
 			<td><b style="color: blue">Email</b></td>
 			<td><dsp:valueof bean="Profile.email" /></td>
 		</tr>
-		<tr>		
+		<tr>
 			<td><b style="color: blue">Date Of Birth</b></td>
 			<td><dsp:valueof date="dd-MMM-yyyy" bean="Profile.dateOfBirth" /></td>
 		</tr>
@@ -73,7 +75,8 @@
 					<td><dsp:valueof
 						bean="CartModifierFormHandler.shippingGroup.shippingAddress.address3" /></td>
 				</tr>
-				--><tr>
+				-->
+				<tr>
 					<td align="center" colspan="2">Zip Code</td>
 					<td><dsp:valueof
 						bean="CartModifierFormHandler.shippingGroup.shippingAddress.postalCode" /></td>
@@ -105,9 +108,9 @@
 			<td><b style="color: blue">Billing Address</b></td>
 			<td><dsp:include page="billing.jsp"/></td>
 		</tr>--%>
-		
-		
-		
+
+
+
 		<dsp:droplet name="ShippingGroupDroplet">
 			<dsp:param name="clear" value="true" />
 			<dsp:param name="shippingGroupTypes" value="hardgoodShippingGroup" />
@@ -210,11 +213,11 @@
 				<dsp:input
 					bean="ShippingGroupFormHandler.applyShippingGroupsErrorURL"
 					type="hidden" value="shipping_cartmodifier.jsp" />
-					<dsp:input
+				<dsp:input
 					bean="ShippingGroupFormHandler.applyShippingGroupsSuccessURL"
 					type="hidden" value="../checkout/payment_info_returning.jsp" />
-				
-				
+
+
 				<dsp:input bean="ShippingGroupFormHandler.applyShippingGroups"
 					type="submit" value="Payment" />
 			</dsp:form>

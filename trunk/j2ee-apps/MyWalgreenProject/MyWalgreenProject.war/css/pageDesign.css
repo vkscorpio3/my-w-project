@@ -1,0 +1,25 @@
+div.leftNav1 {
+	position: absolute;
+	left: 50px;
+	top: 100px;
+	width: 700px
+}
+div.rightNav1 {
+	position: absolute;
+	left: 800px;
+	top: 10px;
+	width: 400px
+}
+
+div.rightNav2 {
+	position: absolute;
+	left: 800px;
+	top: 150px;
+	width: 400px
+}
+div.rightNav3 {
+	position: absolute;
+	left: 800px;
+	top: 340px;
+	width: 400px
+}

@@ -65,7 +65,8 @@
 							</dsp:oparam>
 						</dsp:droplet></td>
 					</tr>
-					--><tr>
+					-->
+					<tr>
 						<td align="center" colspan="2">Street address</td>
 						<td><dsp:droplet name="IsEmpty">
 							<dsp:param
@@ -84,8 +85,7 @@
 									type="text" />
 								<br>
 							</dsp:oparam>
-						</dsp:droplet> 
-						</td>
+						</dsp:droplet></td>
 					</tr>
 					<tr>
 						<dsp:droplet name="IsEmpty">
@@ -93,7 +93,7 @@
 								bean="ShoppingCartModifier.creditCardPaymentGroups[param:index].billingAddress.address2"
 								name="value" />
 							<dsp:oparam name="false">
-							<td align="center" colspan="2">Address2</td>
+								<td align="center" colspan="2">Address2</td>
 								<dsp:input
 									bean="ShoppingCartModifier.creditCardPaymentGroups[param:index].billingAddress.address2"
 									size="40" type="text" />

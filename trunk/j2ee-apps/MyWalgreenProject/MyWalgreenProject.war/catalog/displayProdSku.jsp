@@ -11,7 +11,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<title>Product Details</title>
+	<title>Product</title>
 	<link href="http://fonts.googleapis.com/css?family=Oswald"
 		rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="../style.css" />

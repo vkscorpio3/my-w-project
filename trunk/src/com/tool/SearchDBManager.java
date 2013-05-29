@@ -331,18 +331,6 @@ public class SearchDBManager {
 	}
 
 	public static void main(String[] args) throws RepositoryException {
-		User user = new User();
-		user.setUserName("Tuhin");
-		user.setUserId("318890");
-		user.setSex("M");
-		user.setPassword("XXXX");
-		user.setEmail("na");
-		user.setDateOfBirth("29-APR-90");
-		user.setAddress("Bagnan");
-		SearchDBManager searchDBManager = new SearchDBManager();
-		searchDBManager.addUser(user);
-		System.out.println(searchDBManager.getUserDetails("Tuhin"));
-
 		/*
 		 * user.setUserName("Tuhin Chandra"); user.setUserId("318888");
 		 * user.setSex("Male"); user.setPassword("Password");

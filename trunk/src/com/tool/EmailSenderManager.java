@@ -12,17 +12,19 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 
+import atg.nucleus.GenericService;
+
 import com.bean.OrderBean;
 import com.bean.Products;
 
-public class EmailSenderManager{
-	
+public class EmailSenderManager extends GenericService{
+	VelocityEngine velocityEngine;
+	VelocityContext context;
 	public String generateVelocityTemplate(OrderBean order)
 	throws Exception {
 		/*
 		 * first, get and initialize an engine
 		 */
-		VelocityEngine velocityEngine=new VelocityEngine();
 		velocityEngine.init();
 
 		/*
@@ -51,7 +53,6 @@ public class EmailSenderManager{
 		if(Integer.parseInt(orderTotal)<25){
 			shippingFee="5";
 		}
-		VelocityContext context=new VelocityContext();
 		context.put("orderId", order.getOrderId());
 		context.put("products", products);
 		context.put("orderTotal", Integer.parseInt(orderTotal));
@@ -78,5 +79,33 @@ public class EmailSenderManager{
 		 * use the output in the body of your emails
 		 */
 		return writer.toString();
+	}
+
+	/**
+	 * @return the velocityEngine
+	 */
+	public VelocityEngine getVelocityEngine() {
+		return velocityEngine;
+	}
+
+	/**
+	 * @param velocityEngine the velocityEngine to set
+	 */
+	public void setVelocityEngine(VelocityEngine velocityEngine) {
+		this.velocityEngine = velocityEngine;
+	}
+
+	/**
+	 * @return the context
+	 */
+	public VelocityContext getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(VelocityContext context) {
+		this.context = context;
 	}
 }

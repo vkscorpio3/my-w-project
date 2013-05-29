@@ -1,5 +1,7 @@
 <%@ taglib uri="/dspTaglib" prefix="dsp"%>
-<html>
+
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.GregorianCalendar"%><html>
 <dsp:page>
 	<title>Shipping Option and Address</title>
 	<dsp:importbean bean="/atg/userprofiling/Profile" />
@@ -7,13 +9,14 @@
 	<dsp:importbean bean="/atg/dynamo/droplet/IsNull" />
 	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
+	<dsp:importbean bean="/atg/dynamo/droplet/Compare" />
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
 	<dsp:setvalue bean="Profile.currentLocation" value="shopping_cart" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ErrorMessageForEach" />
 	<head>
 	<script src="../jquery-1.7.1.min.js"></script>
-	
+
 	<style type="text/css">
 .text-label {
 	color: buttonshadow;
@@ -59,17 +62,14 @@
 					</tr>
 					<tr>
 						<td><dsp:input title="Enter First Name"
-							bean="ShoppingCartModifier.profile.shippingAddress.firstName" type="text"
-							onclick="this.value=''" />
-						</td>
+							bean="Profile.firstName"
+							type="text" onclick="this.value=''" /></td>
 						<td><dsp:input title="Enter Middle Name"
-							bean="ShoppingCartModifier.profile.shippingAddress.middleName" type="text"
-							default="Middle Name"
-							onclick="this.value=''" /></td>
+							bean="Profile.middleName"
+							type="text" default="Middle Name" onclick="this.value=''" /></td>
 						<td><dsp:input title="Enter Last Name"
-							bean="ShoppingCartModifier.profile.shippingAddress.lastName" type="text"
-							default="Last Name"
-							onclick="this.value=''" /></td>
+							bean="Profile.lastName"
+							type="text" default="Last Name" onclick="this.value=''" /></td>
 					</tr>
 				</table>
 				</td>
@@ -118,34 +118,48 @@
 					</tr>
 					<tr>
 						<td align="center" colspan="2">State</td>
-						<td><dsp:select title="Choose State"
-							bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
-							id="shipState" onchange="txtState.value=this.value">
-							<%
-								atg.servlet.DynamoHttpServletRequest dynamoRequest = atg.servlet.ServletUtil
-													.getDynamoRequest(request);
-							%>
+						<td><dsp:droplet name="Switch">
+							<dsp:param name="value" bean="Profile.transient" />
+							<dsp:oparam name="false">
+								<dsp:select title="Choose State"
+									bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
+									id="shipState">
+									<%
+										atg.servlet.DynamoHttpServletRequest dynamoRequest = atg.servlet.ServletUtil
+																	.getDynamoRequest(request);
+									%>
 
-							<%-- Generate an empty option tag for no selection --%>
-							<dsp:option value="" />
-							<%-- Iterate over the list of known destinations and generate an option tag for each --%>
+									<%-- Generate an empty option tag for no selection --%>
+									<dsp:option value="" />
+									<%-- Iterate over the list of known destinations and generate an option tag for each --%>
 
-							<dsp:droplet name="/atg/dynamo/droplet/ForEach">
-								<dsp:param name="array"
-									bean="/atg/commerce/util/StateList.places" />
-								<dsp:param name="elementName" value="state" />
-								<dsp:oparam name="output">
-									<dsp:option
-										value='<%=dynamoRequest
-												.getParameter("state.code")%>' />
-									<%=dynamoRequest
-														.getParameter("state.displayName")%>
-								</dsp:oparam>
-							</dsp:droplet>
-						</dsp:select> <dsp:input title="Enter State"
-							bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
-							beanvalue="Profile.shippingAddress.state" type="text"
-							id="txtState" /></td>
+									<dsp:droplet name="/atg/dynamo/droplet/ForEach">
+										<dsp:param name="array"
+											bean="/atg/commerce/util/StateList.places" />
+										<dsp:param name="elementName" value="state" />
+										<dsp:oparam name="output">
+											<dsp:droplet name="Compare">
+												<dsp:param name="obj1" bean="Profile.shippingAddress.state" />
+												<dsp:param name="obj2" param="state.code" />
+												<dsp:oparam name="equal">
+													<dsp:option paramvalue="state.code" selected="true" />
+													<dsp:valueof param="state.displayName"></dsp:valueof>
+												</dsp:oparam>
+												<dsp:oparam name="default">
+													<dsp:option paramvalue="state.code" />
+													<dsp:valueof param="state.displayName"></dsp:valueof>
+												</dsp:oparam>
+											</dsp:droplet>
+										</dsp:oparam>
+									</dsp:droplet>
+								</dsp:select>
+							</dsp:oparam>
+							<dsp:oparam name="true">
+								<dsp:input title="Enter State"
+									bean="ShoppingCartModifier.shippingGroup.shippingAddress.state"
+									type="text" id="shipState" />
+							</dsp:oparam>
+						</dsp:droplet></td>
 						<td align="center" colspan="2">Country</td>
 						<td><dsp:input title="Enter Country"
 							bean="ShoppingCartModifier.shippingGroup.shippingAddress.country"
@@ -159,7 +173,9 @@
 			<tr>
 				<td><b style="color: blue">Billing Address</b><br>
 				<input type="radio" name="sameAsShipping"
-					onclick=changeToShipAddress();>Same As Shipping Address</input><br />
+					onclick=
+	changeToShipAddress();
+>Same As Shipping Address</input><br />
 				<b style="color: red">(Refresh the page to load <br />
 				original Billing Address)</b></td>
 				<td>
@@ -203,35 +219,48 @@
 					</tr>
 					<tr>
 						<td align="center" colspan="2">State</td>
-						<td><dsp:select title="Choose State"
-							bean="ShoppingCartModifier.paymentGroup.billingAddress.state"
-							id="billingState" onchange="txtBillingState.value=this.value">
-							<%
-								atg.servlet.DynamoHttpServletRequest dynamoRequest = atg.servlet.ServletUtil
-													.getDynamoRequest(request);
-							%>
+						<td><dsp:droplet name="Switch">
+							<dsp:param name="value" bean="Profile.transient" />
+							<dsp:oparam name="false">
+								<dsp:select title="Choose State"
+									bean="ShoppingCartModifier.paymentGroup.billingAddress.state"
+									id="billingState">
+									<%
+										atg.servlet.DynamoHttpServletRequest dynamoRequest = atg.servlet.ServletUtil
+																	.getDynamoRequest(request);
+									%>
 
-							<%-- Generate an empty option tag for no selection --%>
-							<dsp:option value="" />
+									<%-- Generate an empty option tag for no selection --%>
+									<dsp:option value="" />
+									<%-- Iterate over the list of known destinations and generate an option tag for each --%>
 
-							<%-- Iterate over the list of known destinations and generate an option tag for each --%>
-
-							<dsp:droplet name="/atg/dynamo/droplet/ForEach">
-								<dsp:param name="array"
-									bean="/atg/commerce/util/StateList.places" />
-								<dsp:param name="elementName" value="state" />
-								<dsp:oparam name="output">
-									<dsp:option
-										value='<%=dynamoRequest
-												.getParameter("state.code")%>' />
-									<%=dynamoRequest
-														.getParameter("state.displayName")%>
-								</dsp:oparam>
-							</dsp:droplet>
-						</dsp:select> <dsp:input title="Enter State"
-							bean="ShoppingCartModifier.paymentGroup.billingAddress.state"
-							beanvalue="Profile.billingAddress.state" type="text"
-							id="txtBillingState" /></td>
+									<dsp:droplet name="/atg/dynamo/droplet/ForEach">
+										<dsp:param name="array"
+											bean="/atg/commerce/util/StateList.places" />
+										<dsp:param name="elementName" value="state" />
+										<dsp:oparam name="output">
+											<dsp:droplet name="Compare">
+												<dsp:param name="obj1" bean="Profile.billingAddress.state" />
+												<dsp:param name="obj2" param="state.code" />
+												<dsp:oparam name="equal">
+													<dsp:option paramvalue="state.code" selected="true" />
+													<dsp:valueof param="state.displayName"></dsp:valueof>
+												</dsp:oparam>
+												<dsp:oparam name="default">
+													<dsp:option paramvalue="state.code" />
+													<dsp:valueof param="state.displayName"></dsp:valueof>
+												</dsp:oparam>
+											</dsp:droplet>
+										</dsp:oparam>
+									</dsp:droplet>
+								</dsp:select>
+							</dsp:oparam>
+							<dsp:oparam name="true">
+								<dsp:input title="Enter State"
+									bean="ShoppingCartModifier.paymentGroup.billingAddress.state"
+									type="text" id="billingState" />
+							</dsp:oparam>
+						</dsp:droplet></td>
 						<td align="center" colspan="2">Country</td>
 						<td><dsp:input title="Enter Country"
 							bean="ShoppingCartModifier.paymentGroup.billingAddress.country"
@@ -261,10 +290,11 @@
 						<td>Credit Card Number</td>
 						<td><dsp:input
 							bean="ShoppingCartModifier.paymentGroup.creditCardNumber"
-							maxlength="16" size="20" type="text" value="4111111111111111" /></td>
+							maxlength="16" size="16" type="text" value="4111111111111111" /></td>
 					</tr>
 					<tr>
-						<td>Expiration Date</td>
+						<td>Expiration Date
+							</td>
 						<td>Month: <dsp:select
 							bean="ShoppingCartModifier.paymentGroup.expirationMonth">
 							<dsp:option value="1" />January
@@ -281,14 +311,19 @@
 										<dsp:option value="12" />December
 									</dsp:select> Year: <dsp:select
 							bean="ShoppingCartModifier.paymentGroup.expirationYear">
-							<dsp:option value="2013" />2013
-										<dsp:option value="2014" selected="true"/>2014
-										<dsp:option value="2015" />2015
-										<dsp:option value="2016" />2016
-										<dsp:option value="2017" />2017
-										<dsp:option value="2018" />2018
-										<dsp:option value="2026" />2026
-									</dsp:select></td>
+							<%
+								int currentYear = Calendar.getInstance().get(
+													Calendar.YEAR);
+							%>
+							<dsp:option value="<%=String.valueOf(currentYear)%>" selected="true"><%=currentYear%></dsp:option>
+							<%
+								for (int index = 1; index < 30; index++) {
+							%>
+							<dsp:option value="<%=String.valueOf(currentYear+index) %>"><%=currentYear+index %></dsp:option>
+							<%
+								}
+							%>
+						</dsp:select></td>
 					</tr>
 				</table>
 				</td>

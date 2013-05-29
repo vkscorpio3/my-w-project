@@ -16,8 +16,7 @@
 	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ErrorMessageForEach" />
 	<body>
-	<div>
-	<br />
+	<div><br />
 	<dsp:form formid="loginForm" method="post">
 		<div>
 		<div>Please enter your user id and password below</div>
@@ -48,7 +47,8 @@
 							<dsp:input bean="ProfileFormHandler.login" type="submit"
 								value="Log In" />
 						</dsp:oparam>
-					</dsp:droplet> <dsp:droplet name="/atg/dynamo/droplet/Switch">
+					</dsp:droplet> 
+					<dsp:droplet name="/atg/dynamo/droplet/Switch">
 						<dsp:param name="value" param="shipping" />
 						<dsp:oparam name="shipping">
 							<dsp:input bean="ProfileFormHandler.loginSuccessURL"
@@ -62,10 +62,10 @@
 							<dsp:input bean="ProfileFormHandler.loginSuccessURL"
 								type="hidden" value="profile/my_profile.jsp" />
 							<dsp:input bean="ProfileFormHandler.logoutSuccessURL"
-								type="hidden" value="home.jsp" />	
+								type="hidden" value="home.jsp" />
 						</dsp:oparam>
 					</dsp:droplet> <dsp:input bean="ProfileFormHandler.loginErrorURL" type="hidden"
-						value="login.jsp"/></td>
+						value="login.jsp" /></td>
 				</tr>
 				<tr>
 

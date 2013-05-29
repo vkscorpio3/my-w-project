@@ -6,8 +6,8 @@
 		<dsp:param name="elementName" value="product" />
 		<dsp:oparam name="output">
 			<br>
-			<a href="vpd.jsp?ID=<dsp:valueof param="product.id"/>">
-			<dsp:valueof param="product.displayName" /> </a>
+			<a href="vpd.jsp?ID=<dsp:valueof param="product.id"/>"> <dsp:valueof
+				param="product.displayName" /> </a>
 			<br>
 			<dsp:droplet name="/atg/commerce/inventory/InventoryLookup">
 				<dsp:param param="product.childSKUs[0].id" name="itemId" />
