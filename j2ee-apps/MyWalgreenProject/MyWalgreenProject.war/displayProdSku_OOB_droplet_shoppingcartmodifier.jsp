@@ -94,7 +94,7 @@
 										<dsp:param name="itemId" param="sku.repositoryId" />
 										<dsp:param name="useCache" value="true" />
 										<dsp:oparam name="output">
-											<dsp:valueof param="inventoryInfo.availabilityStatusMsg"/>
+											<dsp:valueof param="inventoryInfo.availabilityStatusMsg" />
 										</dsp:oparam>
 									</dsp:droplet></td>
 									<dsp:form action="" formid="cart" method="post">

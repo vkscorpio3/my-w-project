@@ -10,7 +10,6 @@
 	<dsp:importbean bean="/atg/formhandler/SearchFormHandler" />
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
-	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Insert title here</title>

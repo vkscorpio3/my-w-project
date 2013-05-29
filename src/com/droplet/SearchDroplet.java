@@ -55,6 +55,15 @@ public class SearchDroplet extends DynamoServlet {
 						logError("SearchDroplet.service():" + e.getMessage());
 					}
 				}
+			}else{
+				try {
+					req.setParameter("droplet_skus", getSearchDBManager()
+							.getProductDetails(productId));
+				} catch (RepositoryException e) {
+					if (isLoggingError()) {
+						logError("SearchDroplet.service():" + e.getMessage());
+					}
+				}
 			}
 		}
 		req.serviceLocalParameter("output", req, res);

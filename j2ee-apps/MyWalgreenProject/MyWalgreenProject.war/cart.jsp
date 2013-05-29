@@ -1,7 +1,9 @@
 <%@ taglib uri="/dspTaglib" prefix="dsp"%>
+<%@ taglib uri="/c" prefix="c"%>
 
 <dsp:page>
 	<title>Cart</title>
+	<dsp:importbean bean="/atg/commerce/promotion/CouponFormHandler" />
 	<dsp:importbean
 		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
 	<dsp:importbean
@@ -10,14 +12,15 @@
 	<dsp:importbean bean="/atg/commerce/pricing/ItemPricingEngine" />
 
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
+	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
 	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<dsp:importbean bean="/atg/dynamo/droplet/Compare" />
 
 	<table border=1 cellpadding=0 cellspacing=0 align="center">
 		<tr bgcolor="#DBDBDB">
-			<td colspan=1 height=18><span class=small> <dsp:droplet
-				name="Switch">
+			<td colspan=1 height=18><span class=small> 
+			<dsp:droplet name="Switch">
 				<dsp:param name="value" param="noCrumbs" />
 				<dsp:oparam name="false">
 				</dsp:oparam>
@@ -26,7 +29,8 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b
 						style="color: blue">Current Order</b>
 				</dsp:oparam>
-			</dsp:droplet></td>
+			</dsp:droplet>
+			</td>
 		</tr>
 
 
@@ -46,7 +50,7 @@
 									<tr bgcolor="lime">
 										<td align=center colspan="1"><span class=smallbw>Delivery
 										Method</span></td>
-										
+
 										<td align=center colspan=1><span class=smallbw>Name</span></td>
 										<td align=center colspan=1><span class=smallbw>Qty</span></td>
 										<td align=center colspan=1><span class=smallbw>Rate</span></td>
@@ -71,33 +75,53 @@
 													<%-- Display part number, product name/link, inventory info columns --%>
 
 													<td colspan="1">
-													
+													<dsp:getvalueof var="fulfillerType" param="CommerceItem.auxiliaryData.catalogRef.fulfillerType"/>
+													<dsp:getvalueof var="sddEnabled" param="CommerceItem.auxiliaryData.catalogRef.sddEnabled"/>
+													<dsp:getvalueof var="webExclusive" param="CommerceItem.auxiliaryData.catalogRef.webExclusive"/>
+													<dsp:getvalueof var="activated" param="CommerceItem.auxiliaryData.catalogRef.activated"/>
+													<dsp:getvalueof var="shippingChargeCode" param="CommerceItem.auxiliaryData.catalogRef.shippingChargeCode"/>
+													<dsp:getvalueof var="loyaltyEligible" param="CommerceItem.auxiliaryData.catalogRef.loyaltyEligible"/>
+													<dsp:getvalueof var="loyaltyRedeemable" param="CommerceItem.auxiliaryData.catalogRef.loyaltyRedeemable"/>
+													<br/>
+														<%-- Ship To You --%>
+													<c:if test="${webExclusive eq 'Web Only' or webExclusive eq 'Web and Store'}">	
 													<dsp:input
 														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
 														value="Ship To You"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
-													+ currentItem.toString()%>"
-														type="radio" checked="true">
-													</dsp:input><dsp:valueof value="Ship To You" /><br />
+														+ currentItem
+																.toString()%>"
+														type="radio" checked="true"/>
+													<dsp:valueof value="Ship To You" /><br />
+													</c:if>
+													
+														<%-- Pick Up --%>
+													<c:if test="${webExclusive eq 'Store Only' or webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store'}">
 													<dsp:input
 														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
 														value="Pick Up"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
-													+ currentItem.toString()%>"
-														type="radio">
-													</dsp:input><dsp:valueof value="Pick Up" /><br />
+														+ currentItem
+																.toString()%>"
+														type="radio"/>
+													<dsp:valueof value="Pick Up" /><br />
+													</c:if>
+														<%-- Same Day Delivery --%>
+													<c:if test="${(webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store') and sddEnabled eq 'true'}">
 													<dsp:input
 														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
-														value="Local Delivery"
+														value="Same Day Delivery"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
-													+ currentItem.toString()%>"
+														+ currentItem
+																.toString()%>"
 														type="radio">
-													</dsp:input><dsp:valueof value="Local Delivery" /><br />
+													</dsp:input><dsp:valueof value="Same Day Delivery" /><br />
+													</c:if>
 													</td>
-													
+
 													<%-- Display editable quantity column --%>
 													<td colspan="1"><dsp:param name="prodName"
 														param="CommerceItem.auxiliaryData.catalogRef.displayName" />
@@ -105,7 +129,24 @@
 														<dsp:valueof param="prodName" />
 														<dsp:param name="prodId"
 															param="CommerceItem.auxiliaryData.catalogRef.id" />
-													</dsp:a></td>
+													</dsp:a> <!-- Display Imgage of CommerceItem --> <dsp:getvalueof
+														id="imgUrl"
+														param="CommerceItem.auxiliaryData.productRef.smallImage.url"
+														idtype="java.lang.String">
+														<%
+															if (null != imgUrl) {
+																										imgUrl = imgUrl
+																												.substring(imgUrl
+																														.lastIndexOf("/") + 1);
+																										imgUrl = imgUrl
+																												.substring(imgUrl
+																														.indexOf("_") + 1);
+																									}
+														%>
+														<dsp:img height="100"
+															src="<%="product_images/"
+															+ imgUrl%>" />
+													</dsp:getvalueof></td>
 													<td><input type="text" size="3"
 														name="<dsp:valueof param='CommerceItem.id'/>"
 														value="<dsp:valueof param='CommerceItem.quantity'/>" /></td>
@@ -126,7 +167,10 @@
 															<dsp:valueof converter="currency"
 																param="CommerceItem.priceInfo.salePrice" />
 														</dsp:oparam>
-													</dsp:droplet></td>
+													</dsp:droplet>
+													orderDiscountShare:	<dsp:valueof param="CommerceItem.priceInfo.orderDiscountShare"></dsp:valueof><br>
+													quantityDiscounted:	<dsp:valueof param="CommerceItem.priceInfo.quantityDiscounted"></dsp:valueof>
+													</td>
 													<!-- TOTAL Price -->
 													<td><dsp:droplet name="Switch">
 														<dsp:param name="value"
@@ -145,7 +189,7 @@
 														</dsp:oparam>
 													</dsp:droplet></td>
 													<%-- Display "remove" checkbox column --%>
-													<td align=middle><dsp:getvalueof
+													<td align="center"><dsp:getvalueof
 														vartype="java.lang.Object" var="CommerceItemIds"
 														param="CommerceItem.id" /> <dsp:getvalueof
 														id="commerceItemId" param="CommerceItem.id">
@@ -163,8 +207,8 @@
 									</dsp:droplet>
 									<%-- end ForEach over shipping groups --%>
 									<tr align="right">
-										<td colspan="6">Item Subtotal: &nbsp;<dsp:droplet
-											name="Compare">
+										<td colspan="6">Item Subtotal: &nbsp; 
+										<dsp:droplet name="Compare">
 											<dsp:param bean="ShoppingCart.current.priceInfo.amount"
 												name="obj1" />
 											<dsp:param bean="ShoppingCart.current.priceInfo.rawSubtotal"
@@ -176,15 +220,60 @@
 												<dsp:valueof converter="currency"
 													bean="ShoppingCart.current.priceInfo.amount" />
 											</dsp:oparam> </b>
-										</dsp:droplet> <br />
-										Estimated Shipping Charge: &nbsp;<b style="color: blue"><dsp:valueof
-											converter="currency" value="$5.00" /></b></td>
+										</dsp:droplet>
+										 <br />
+										 amount:<dsp:valueof bean="ShoppingCart.current.priceInfo.amount"/><br/>
+										 rawSubtotal:<dsp:valueof bean="ShoppingCart.current.priceInfo.rawSubtotal"/><br>
+										 manualAdjustmentTotal:<dsp:valueof bean="ShoppingCart.current.priceInfo.manualAdjustmentTotal"/>
+										<dsp:setvalue
+											bean="ShoppingCartModifier.order.priceInfo.shipping"
+											value="5" /> 
+										Estimated Shipping Charge: &nbsp;
+										<b	style="color: blue"> 
+										<dsp:valueof converter="currency"
+											bean="ShoppingCartModifier.order.priceInfo.shipping" /></b> 
+										<dsp:input
+											bean="ShoppingCartModifier.repriceOrder" type="submit"></dsp:input>
+										</td>
+									</tr>
+
+									<tr align="left">
+										<td colspan="7">Promotions<br>
+										<dsp:droplet name="/atg/dynamo/droplet/ForEach">
+											<dsp:param bean="/atg/userprofiling/Profile.activePromotions"
+												name="array" />
+											<dsp:oparam name="outputStart">
+												<b>You have these promotions:</b>
+											</dsp:oparam>
+											<dsp:oparam name="output">
+												<li><dsp:valueof param="element.promotion.displayName" /></li>
+											</dsp:oparam>
+											<dsp:oparam name="empty">You have no promotions</dsp:oparam>
+										</dsp:droplet> <%--<dsp:include page="common/DisplayActivePromotions.jsp">
+										</dsp:include>--%>
+										</td>
 									</tr>
 									<tr align="left">
-										<td>Coupon:<input type="text" /><input type="submit" /></td>
+										<td colspan="7">Coupon<br>
+
+										<b>If you have a coupon, type its code here:</b><br>
+
+										<%
+											/* Where to go to on success or failure */
+										%> <dsp:input bean="CouponFormHandler.claimCouponSuccessURL"
+											value="cart.jsp" type="hidden" /> <dsp:input
+											bean="CouponFormHandler.claimCouponErrorURL" value="cart.jsp"
+											type="hidden" /> <%
+ 	/* Get the coupon claim code */
+ %> Coupon code: <dsp:input bean="CouponFormHandler.couponClaimCode"
+											type="text" /> <dsp:input
+											bean="ShoppingCartModifier.repriceOrder" type="hidden"></dsp:input>
+										<dsp:input bean="CouponFormHandler.claimCoupon" type="submit"
+											value="Claim it" />
 									</tr>
+
 								</table>
-								<hr color="red" size="5" width=100%>
+								<hr color="red" size="5" width="100%">
 
 								<center><%-- Update Order button: --%> <dsp:input
 									bean="CartModifierFormHandler.setOrderByCommerceId"
@@ -211,7 +300,7 @@
 								<%-- If Order is Successful --%>
 								<dsp:input
 									bean="CartModifierFormHandler.moveToPurchaseInfoSuccessURL"
-									type="hidden" value="checkout/shipping.jsp" />
+									type="hidden" value="checkout/shippingAndBilling.jsp" />
 
 								<%-- move on to shipping --%>
 

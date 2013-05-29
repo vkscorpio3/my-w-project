@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!DOCTYPE gsa-template
+        PUBLIC "-//Art Technology Group, Inc.//DTD General SQL Adapter//EN"
+        "http://www.atg.com/dtds/gsa/gsa_1.0.dtd">
+
+<gsa-template>
+
+  <header>
+    <name>Dynamo Commerce Server Default Catalog</name>
+    <author>DCS Team</author>
+    <version>$Id: //product/DCS/version/9.0/templates/DCS/config/atg/commerce/catalog/productCatalog.xml#1 $$Change: 508164 $</version>
+  </header>
+
+	<item-descriptor name="sku" xml-combine="append" sub-type-property="type"
+		display-property="displayName" item-cache-size="1000"
+		query-cache-size="1000" version-property="version" id-space-name="sku"
+		sub-type-value="sku" display-name-resource="itemDescriptorSKU">
+		<!--Added the table-->
+		<table name="www_sku" type="auxiliary" id-column-name="sku_id">
+			<property name="fulfillerType" required="true"
+				column-name="FULFILLER_TYPE" data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="DC"/>
+				<option code="1" value="PSC"/>
+				<option code="2" value="Electronics"/>
+				<option code="3" value="CH"/>
+			</property>
+			<property name="sddEnabled" column-name="SDD_ENABLED"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="false"/>
+				<option code="1" value="true"/>
+			</property>
+			<property name="webExclusive" column-name="WEB_EXCLUSIVE"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="Web and Store"/>
+				<option code="1" value="Web Only"/>
+				<option code="2" value="Store Only"/>
+				<option code="3" value="Web Pickup and Store"/>
+			</property>
+			<property name="activated" column-name="ACTIVATED"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="false"/>
+				<option code="1" value="true"/>
+			</property>
+			<property name="shippingChargeCode" column-name="SHIPPING_CHARGE_CODE"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="Standard"/>
+				<option code="1" value="Free"/>
+			</property>
+			<property name="loyaltyEligible" column-name="LOYALTY_ELIGIBLE"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="false"/>
+				<option code="1" value="true"/>
+			</property>
+			<property name="loyaltyRedeemable" column-name="LOYALTY_REDEEMABLE"
+				data-type="Enumerated">
+				<attribute name="useCodeForValue" value="false"/>
+				<option code="0" value="false"/>
+				<option code="1" value="true"/>
+			</property>
+		</table>
+	</item-descriptor>
+</gsa-template>
+<!-- @version $Id: //product/DCS/version/9.0/templates/DCS/config/atg/commerce/catalog/productCatalog.xml#1 $$Change: 508164 $ -->

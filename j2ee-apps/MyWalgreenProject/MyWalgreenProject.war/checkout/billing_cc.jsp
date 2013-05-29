@@ -31,8 +31,7 @@ and an OrderPaymentInfo object to associate a PaymentGroup with the Order.
 
 			<table border=0 cellpadding=0 cellspacing=0 width=800>
 				<tr>
-					<td colspan=3>
-					</td>
+					<td colspan=3></td>
 				</tr>
 
 				<tr bgcolor="#DBDBDB">
@@ -53,7 +52,7 @@ and an OrderPaymentInfo object to associate a PaymentGroup with the Order.
 								<td><dsp:img src="../images/d.gif" /></td>
 							</tr>
 							<tr>
-								<td colspan=2><span class="big">Billing</span> </td>
+								<td colspan=2><span class="big">Billing</span></td>
 							</tr>
 							<tr>
 								<td><dsp:img src="../images/d.gif" /></td>

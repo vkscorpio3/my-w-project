@@ -1,9 +1,10 @@
 <%@ taglib uri="/dspTaglib" prefix="dsp"%>
 <center><dsp:page>
-<title>Payment and Billing</title>
+	<title>Payment and Billing</title>
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
-	<dsp:importbean	bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
+	<dsp:importbean
+		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
 	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<dsp:importbean bean="/atg/userprofiling/Profile" />
@@ -32,8 +33,7 @@
 			
 		</dsp:oparam>
 	</dsp:droplet></h2>
-	<p><!-- Check to see if there are any errors on the form --> 
-	<dsp:droplet
+	<p><!-- Check to see if there are any errors on the form --> <dsp:droplet
 		name="/atg/dynamo/droplet/Switch">
 		<dsp:param bean="CartModifierFormHandler.formError" name="value" />
 		<dsp:oparam name="true">
@@ -84,11 +84,10 @@
 						</dsp:droplet>
 						<b><dsp:valueof converter="creditcard" param="key" /></b>
 					</dsp:oparam>
-				</dsp:droplet>
-				PaymentGroup<dsp:valueof bean="CartModifierFormHandler.PaymentGroup"></dsp:valueof>
-				<dsp:droplet name="ForEach">
-					<dsp:param bean="CartModifierFormHandler.PaymentGroup"
-						name="array" />
+				</dsp:droplet> PaymentGroup<dsp:valueof
+					bean="CartModifierFormHandler.PaymentGroup"></dsp:valueof> <dsp:droplet
+					name="ForEach">
+					<dsp:param bean="CartModifierFormHandler.PaymentGroup" name="array" />
 					<dsp:oparam name="output">
 						<%-- For Billing Address --%>
 						<table border=1 cellpadding=4 cellspacing=10 width=700

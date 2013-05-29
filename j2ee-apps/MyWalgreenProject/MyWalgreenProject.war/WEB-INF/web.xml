@@ -142,6 +142,11 @@
 		<taglib-uri>/dspTaglib</taglib-uri>
 		<taglib-location>/WEB-INF/tld/dspjspTaglib1_0.tld</taglib-location>
 	</taglib>
+	<!-- JSTL tag Library-->
+	<taglib>
+		<taglib-uri>/c</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+	</taglib>
 	<!-- Use the Core Tag library in your jsp pages -->
 	<taglib>
 		<taglib-uri>/core</taglib-uri>

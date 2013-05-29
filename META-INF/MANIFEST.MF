@@ -4,4 +4,4 @@ ATG-Required: DAS DPS DSS  DCS B2CCommerce
 ATG-J2EE: j2ee-apps/MyWalgreenProject
 ATG-EAR-Module: j2ee-apps/MyWalgreenProject
 ATG-Class-Path: bin
-Class-Path: ./jar/velocity-1.5.jar
+Class-Path: jar/velocity-1.5.jar

@@ -1,9 +1,10 @@
 <%@ taglib uri="/dspTaglib" prefix="dsp"%>
 <center><dsp:page>
-<title>Payment and Billing</title>
+	<title>Payment and Billing</title>
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
-	<dsp:importbean	bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
+	<dsp:importbean
+		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
 	<dsp:importbean bean="/atg/dynamo/droplet/Switch" />
 	<dsp:importbean bean="/atg/userprofiling/Profile" />
@@ -15,8 +16,8 @@
 	<!-- card objects stored.  They are given a list of credit        -->
 	<!-- card objects that they can use to make this purchase.        -->
 	<!------------------------------------------------------------------>
-	<h2 align="right">
-	PaymentGroup<dsp:valueof bean="CartModifierFormHandler.CreditCard.Address.FirstName"></dsp:valueof>
+	<h2 align="right">PaymentGroup<dsp:valueof
+		bean="CartModifierFormHandler.CreditCard.Address.FirstName"></dsp:valueof>
 	<dsp:droplet name="/atg/dynamo/droplet/IsEmpty">
 		<dsp:param name="value" bean="Profile.Login" />
 		<dsp:oparam name="true">
@@ -34,8 +35,7 @@
 			
 		</dsp:oparam>
 	</dsp:droplet></h2>
-	<p><!-- Check to see if there are any errors on the form --> 
-	<dsp:droplet
+	<p><!-- Check to see if there are any errors on the form --> <dsp:droplet
 		name="/atg/dynamo/droplet/Switch">
 		<dsp:param bean="ShoppingCartModifier.formError" name="value" />
 		<dsp:oparam name="true">
@@ -325,8 +325,7 @@
 							<tr>
 								<td colspan="2" align="center"><dsp:input
 									bean="ShoppingCartModifier.MoveToConfirmationSuccessURL"
-									type="hidden" value="co_confirm.jsp" /> 
-									<!-- Location to go to on an error.  We stay on this page and display all errors -->
+									type="hidden" value="co_confirm.jsp" /> <!-- Location to go to on an error.  We stay on this page and display all errors -->
 								<dsp:input
 									bean="ShoppingCartModifier.MoveToConfirmationErrorURL"
 									type="hidden" value="payment_info_returning.jsp" /> <!-- Go to this URL if user's session expired while he pondered this page -->

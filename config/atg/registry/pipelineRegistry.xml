@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline-registry-configuration>
+
+	<pipeline-manager-registry xml-combine="append-without-matching">
+		<pipeline-manager>
+			<nucleus-path>/atg/commerce/MyPipelineManager</nucleus-path>
+		</pipeline-manager>
+	</pipeline-manager-registry>
+
+	<processor-registry xml-combine="append-without-matching">
+		<processor>
+			<nucleus-path>/atg/processors/MyCustomProcessor</nucleus-path>
+		</processor>
+
+		<processor>
+			<nucleus-path>/atg/processors/MyCustomProcessor2</nucleus-path>
+		</processor>
+
+		<processor>
+			<nucleus-path>/atg/processors/MyCustomProcessor3</nucleus-path>
+		</processor>
+
+	</processor-registry>
+</pipeline-registry-configuration>
