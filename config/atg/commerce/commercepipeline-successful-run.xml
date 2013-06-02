@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE pipelinemanager PUBLIC
+	"-//Art Technology Group, Inc.//DTD Dynamo Pipeline Manager//EN"
+	'http://www.atg.com/dtds/pipelinemanager/pipelinemanager_1.0.dtd'>
+
+<pipelinemanager>
+	<!-- This chain refreshes an Order from the repository -->
+	<pipelinechain xml-combine="replace" name="refreshOrder" transaction="TX_REQUIRED"
+		headlink="loadOrderObjectForRefresh">
+		<pipelinelink name="loadOrderObjectForRefresh"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadOrderObject" />
+			<transition returnvalue="1" link="loadCommerceItemObjects" />
+		</pipelinelink>
+		<pipelinelink name="loadCommerceItemObjects" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadCommerceItemObjects" />
+			<transition returnvalue="1" link="loadShippingGroupObjects" />
+		</pipelinelink>
+		<pipelinelink name="loadShippingGroupObjects"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadShippingGroupObjects" />
+			<transition returnvalue="1" link="splitShippingGroup" />
+		</pipelinelink>
+		<!-- Start : Split Shipping Group -->
+		<pipelinelink name="splitShippingGroup"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SplitShippingGroup" />
+			<transition returnvalue="1" link="loadHandlingInstructionObjects" />
+		</pipelinelink>
+		<!-- End : Split Shipping Group -->
+		<pipelinelink name="loadHandlingInstructionObjects"
+			transaction="TX_MANDATORY">
+			<processor
+				jndi="/atg/commerce/order/processor/LoadHandlingInstructionObjects" />
+			<transition returnvalue="1" link="loadPaymentGroupObjects" />
+		</pipelinelink>
+		<pipelinelink name="loadPaymentGroupObjects" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadPaymentGroupObjects" />
+			<transition returnvalue="1" link="splitPaymentGroup" />
+		</pipelinelink>
+		<!-- Start : Split Payment Group -->
+		<pipelinelink name="splitPaymentGroup"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SplitPaymentGroup" />
+			<transition returnvalue="1" link="loadPriceInfoObjects" />
+		</pipelinelink>
+		<!-- End : Split Payment Group -->
+		<pipelinelink name="loadPriceInfoObjects" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadPriceInfoObjects" />
+			<transition returnvalue="1" link="loadPaymentStatusObjects" />
+		</pipelinelink>
+		<pipelinelink name="loadPaymentStatusObjects"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadPaymentStatusObjects" />
+			<transition returnvalue="1" link="loadRelationshipObjects" />
+		</pipelinelink>
+		<pipelinelink name="loadRelationshipObjects" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/LoadRelationshipObjects" />
+			<transition returnvalue="1" link="setCatalogRefs" />
+		</pipelinelink>
+		<pipelinelink name="setCatalogRefs" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SetCatalogRefs" />
+			<transition returnvalue="1" link="setProductRefs" />
+		</pipelinelink>
+		<pipelinelink name="setProductRefs" transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SetProductRefs" />
+			<transition returnvalue="1" link="removeExpiredCommerceItems" />
+		</pipelinelink>
+		<pipelinelink name="removeExpiredCommerceItems"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/RemoveExpiredCommerceItems" />
+		</pipelinelink>
+	</pipelinechain>
+</pipelinemanager>

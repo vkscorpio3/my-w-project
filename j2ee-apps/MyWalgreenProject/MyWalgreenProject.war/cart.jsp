@@ -83,10 +83,12 @@
 													<dsp:getvalueof var="loyaltyEligible" param="CommerceItem.auxiliaryData.catalogRef.loyaltyEligible"/>
 													<dsp:getvalueof var="loyaltyRedeemable" param="CommerceItem.auxiliaryData.catalogRef.loyaltyRedeemable"/>
 													<br/>
-														<%-- Ship To You --%>
+													<dsp:valueof param="CommerceItem.id"></dsp:valueof><br/>
+													
+													<%-- Ship To You bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod" --%>
 													<c:if test="${webExclusive eq 'Web Only' or webExclusive eq 'Web and Store'}">	
 													<dsp:input
-														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
+														bean="/atg/commerce/order/CommerceItem.shippingMethod"
 														value="Ship To You"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
@@ -99,25 +101,26 @@
 														<%-- Pick Up --%>
 													<c:if test="${webExclusive eq 'Store Only' or webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store'}">
 													<dsp:input
-														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
+														bean="/atg/commerce/order/CommerceItem.shippingMethod"
 														value="Pick Up"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
 														+ currentItem
 																.toString()%>"
-														type="radio"/>
+														type="radio" checked="true"/>
 													<dsp:valueof value="Pick Up" /><br />
 													</c:if>
 														<%-- Same Day Delivery --%>
 													<c:if test="${(webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store') and sddEnabled eq 'true'}">
 													<dsp:input
-														bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod"
+														bean="/atg/commerce/order/CommerceItem.shippingMethod"
 														value="Same Day Delivery"
 														onchange="txtDeliveryOption.value+=this.value"
 														name="<%="Delivery"
-														+ currentItem
-																.toString()%>"
-														type="radio">
+																	+ currentItem
+																			.toString()%>"
+														type="radio" checked="true">
+													<dsp:setvalue param=""/>
 													</dsp:input><dsp:valueof value="Same Day Delivery" /><br />
 													</c:if>
 													</td>
@@ -135,13 +138,9 @@
 														idtype="java.lang.String">
 														<%
 															if (null != imgUrl) {
-																										imgUrl = imgUrl
-																												.substring(imgUrl
-																														.lastIndexOf("/") + 1);
-																										imgUrl = imgUrl
-																												.substring(imgUrl
-																														.indexOf("_") + 1);
-																									}
+																imgUrl = imgUrl.substring(imgUrl.lastIndexOf("/") + 1);
+																imgUrl = imgUrl.substring(imgUrl.indexOf("_") + 1);
+															}
 														%>
 														<dsp:img height="100"
 															src="<%="product_images/"
@@ -207,33 +206,71 @@
 									</dsp:droplet>
 									<%-- end ForEach over shipping groups --%>
 									<tr align="right">
-										<td colspan="6">Item Subtotal: &nbsp; 
-										<dsp:droplet name="Compare">
-											<dsp:param bean="ShoppingCart.current.priceInfo.amount"
-												name="obj1" />
-											<dsp:param bean="ShoppingCart.current.priceInfo.rawSubtotal"
-												name="obj2" />
-											<b style="color: blue"> <dsp:oparam name="default">
-												<dsp:valueof converter="currency"
-													bean="ShoppingCart.current.priceInfo.amount" />
-											</dsp:oparam> <dsp:oparam name="equal">
-												<dsp:valueof converter="currency"
-													bean="ShoppingCart.current.priceInfo.amount" />
-											</dsp:oparam> </b>
-										</dsp:droplet>
-										 <br />
-										 amount:<dsp:valueof bean="ShoppingCart.current.priceInfo.amount"/><br/>
-										 rawSubtotal:<dsp:valueof bean="ShoppingCart.current.priceInfo.rawSubtotal"/><br>
-										 manualAdjustmentTotal:<dsp:valueof bean="ShoppingCart.current.priceInfo.manualAdjustmentTotal"/>
-										<dsp:setvalue
-											bean="ShoppingCartModifier.order.priceInfo.shipping"
-											value="5" /> 
-										Estimated Shipping Charge: &nbsp;
-										<b	style="color: blue"> 
+										<td colspan="6">
+										<table>
+											<tr>
+												<dsp:getvalueof var="rawSubtotal" vartype="java.lang.Double"
+													bean="ShoppingCart.current.priceInfo.rawSubtotal" />
+												<td>Raw Subtotal :</td>
+												<td align="right"><b style="color: blue"> <dsp:valueof
+													converter="currency"
+													bean="ShoppingCart.current.priceInfo.rawSubtotal" /></b></td>
+												
+											</tr>
+											<c:if test="${rawSubtotal ge 80}">
+													<tr>
+														<td>Discount:</td>
+														<td align="right"><b style="color: blue"> <dsp:valueof
+															converter="currency" value="$20.00" /></b></td>
+													</tr>
+											</c:if>
+											<tr>
+												<td>Item Subtotal:</td>
+												<td align="right"><b style="color: blue">
+												<dsp:droplet name="Compare">
+													<dsp:param bean="ShoppingCart.current.priceInfo.amount"
+														name="obj1" />
+													<dsp:param
+														bean="ShoppingCart.current.priceInfo.rawSubtotal"
+														name="obj2" />
+													 <dsp:oparam name="default">
+														<dsp:valueof converter="currency"
+															bean="ShoppingCart.current.priceInfo.amount" />
+													</dsp:oparam> <dsp:oparam name="equal">
+														<dsp:valueof converter="currency"
+															bean="ShoppingCart.current.priceInfo.amount" />
+													</dsp:oparam> 
+												</dsp:droplet> </b>
+												</td>
+											</tr>
+											<tr>
+												<dsp:setvalue
+													bean="ShoppingCartModifier.order.priceInfo.shipping"
+													value="5.99" />
+												<td>Shipping Charge:</td>
+												<td align="right"><b style="color: blue"> <dsp:valueof
+													converter="currency"
+													bean="ShoppingCart.current.priceInfo.shipping" /></b> 
+												</td>
+											</tr>
+											<tr>
+												<td>Estimated Total:</td>
+												<td align="right"><b style="color: blue"> <dsp:valueof
+													converter="currency"
+													bean="ShoppingCart.current.priceInfo.total" /></b> 
+												</td>
+											</tr>
+											<!--<b	style="color: blue"> 
 										<dsp:valueof converter="currency"
-											bean="ShoppingCartModifier.order.priceInfo.shipping" /></b> 
-										<dsp:input
-											bean="ShoppingCartModifier.repriceOrder" type="submit"></dsp:input>
+											bean="ShoppingCartModifier.order.priceInfo.total" /></b> 
+										<br/>-->
+											<tr>
+												<td colspan="2"><dsp:input
+													bean="ShoppingCartModifier.repriceOrder" type="submit"
+													value="Reprice Order"></dsp:input>
+											<tr>
+												<td>
+										</table>
 										</td>
 									</tr>
 
