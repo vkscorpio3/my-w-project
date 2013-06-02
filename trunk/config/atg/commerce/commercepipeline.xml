@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE pipelinemanager PUBLIC
+	"-//Art Technology Group, Inc.//DTD Dynamo Pipeline Manager//EN"
+	'http://www.atg.com/dtds/pipelinemanager/pipelinemanager_1.0.dtd'>
+
+<pipelinemanager>
+	<pipelinechain name="moveToConfirmation" xml-combine="replace" transaction="TX_REQUIRED"
+		headlink="executeRepriceOrderChain">
+		<pipelinelink name="executeRepriceOrderChain"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/pricing/processor/ExecuteRepriceOrderChain" />
+			<transition returnvalue="1"
+				link="splitShippingGroup" />
+		</pipelinelink>
+		<!-- Start : Split Shipping Group -->
+		<pipelinelink name="splitShippingGroup"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SplitShippingGroup" />
+			<transition returnvalue="1" link="splitPaymentGroup" />
+		</pipelinelink>
+		<!-- End : Split Shipping Group -->
+		<!-- Start : Split Payment Group -->
+		<pipelinelink name="splitPaymentGroup"
+			transaction="TX_MANDATORY">
+			<processor jndi="/atg/commerce/order/processor/SplitPaymentGroup" />
+			<transition returnvalue="1" link="validatePaymentGroupsPreConfirmation" />
+		</pipelinelink>
+		<!-- End : Split Payment Group -->
+		<pipelinelink name="validatePaymentGroupsPreConfirmation"
+			transaction="TX_MANDATORY">
+			<processor
+				jndi="/atg/commerce/order/processor/ValidatePaymentGroupsPreConfirmation" />
+			<transition returnvalue="1" link="executeValidateForCheckoutChain2" />
+		</pipelinelink>
+		<pipelinelink name="executeValidateForCheckoutChain2"
+			transaction="TX_MANDATORY">
+			<processor
+				jndi="/atg/commerce/order/processor/ExecuteValidateForCheckoutChain" />
+		</pipelinelink>
+	</pipelinechain>
+</pipelinemanager>

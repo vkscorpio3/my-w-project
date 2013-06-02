@@ -39,7 +39,6 @@ div.rightNav3 {
 </style>
 	</head>
 
-	
 	<p><dsp:form action="">
 		<dsp:input bean="ShoppingCartModifier.orderId"
 			beanvalue="ShoppingCart.current.Id" type="hidden" />
@@ -67,4 +66,5 @@ div.rightNav3 {
 		<div class="rightNav3"><dsp:include page="billing_fg.jsp"/></div>
 		<p>&nbsp;<br>
 	</dsp:form>
+	
 </dsp:page>

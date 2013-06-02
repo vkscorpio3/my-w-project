@@ -17,14 +17,19 @@
 	</tr>
 	<tr valign=top>
 		<td align=center>Shipping</td>
-		<td align=center><dsp:valueof converter="currency"
-			bean="ShoppingCartModifier.order.priceInfo.shipping" /></td>
+		<td align=center>
+			<dsp:valueof converter="currency"
+			bean="/atg/commerce/ShoppingCart.current.priceInfo.shipping" />
+		</td>
 	</tr>
 	<tr valign=top>
 		<td align=center>Order Total</td>
 		<td align=center><b><dsp:valueof converter="currency"
-			bean="ShoppingCartModifier.order.priceInfo.total" /></b></td>
+			bean="ShoppingCartModifier.order.priceInfo.total" /></b>
+		
+		</td>
 	</tr>	
+
 </table>
 </body>
 </dsp:page>

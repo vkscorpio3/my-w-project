@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE gsa-template
+        PUBLIC "-//Art Technology Group, Inc.//DTD General SQL Adapter//EN"
+        "http://www.atg.com/dtds/gsa/gsa_1.0.dtd">
+
+<gsa-template>
+
+  <header>
+    <name>Order</name>
+    <author>Manny Parasirakis</author>
+    <version>$Id: //product/DCS/version/9.0/templates/DCS/config/atg/commerce/order/orderrepository.xml#1 $$Change: 508164 $</version>
+  </header>
+  <item-descriptor name="commerceItem" xml-combine="replace" sub-type-property="type" version-property="version"
+              cache-mode="simple" display-name-resource="itemDescriptorCommerceItem" item-cache-timeout="180000">
+    
+    <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+
+    <attribute name="categoryBasicsPriority" value="10"/>
+    <attribute name="categoryCatalogPriority" value="20"/>
+    <attribute name="categoryInfoPriority" value="30"/>
+
+    <table name="dcspp_item" type="primary" id-column-name="commerce_item_id">
+      <property name="type" data-type="enumerated" default="commerceItem" expert="true" category-resource="categoryInfo" display-name-resource="type">
+        <attribute name="useCodeForValue" value="false"/>
+        <option value="commerceItem" code="0"/>
+        <option value="configurableCommerceItem" code="4001"/>
+        <option value="subSkuCommerceItem" code="4002"/>
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="10"/>
+      </property>
+      <property name="version" column-name="version" data-type="int" expert="true" category-resource="categoryInfo" display-name-resource="version">
+        <attribute name="uiwritable" value="false"/>
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="20"/>
+      </property>
+
+      <property name="commerceItemClassType" column-name="item_class_type" data-type="string" category-resource="categoryBasics" display-name-resource="commerceItemClassType">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="100"/>
+      </property>
+
+      <property name="catalogId" column-name="catalog_id" data-type="string" category-resource="categoryCatalog" display-name-resource="catalogId">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="10"/>
+      </property>
+      <property name="catalogRefId" column-name="catalog_ref_id" data-type="string" category-resource="categoryCatalog" display-name-resource="catalogRefId">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="20"/>
+      </property>
+      <property name="catalogKey" column-name="catalog_key" data-type="string" category-resource="categoryCatalog" display-name-resource="catalogKey">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="30"/>
+      </property>
+
+      <property name="productId" column-name="product_id" data-type="string" category-resource="categoryBasics" display-name-resource="productId">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="10"/>
+      </property>
+      <property name="quantity" column-name="quantity" data-type="long" default="0" category-resource="categoryBasics" display-name-resource="quantity">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="20"/>
+      </property>
+      <property name="state" column-name="state" data-type="string" default="INITIAL" category-resource="categoryBasics" display-name-resource="state">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="30"/>
+      </property>
+      <property name="stateDetail" column-name="state_detail" data-type="string" category-resource="categoryBasics" display-name-resource="stateDetail">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="40"/>
+      </property>
+      <property name="priceInfo" column-name="price_info" item-type="itemPriceInfo" cascade="delete" category-resource="categoryBasics" display-name-resource="priceInfo">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="50"/>
+      </property>
+      <property name="order" column-name="order_ref" item-type="order" category-resource="categoryBasics" display-name-resource="order">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="60"/>
+      </property>
+	  <property name="shippingMethod" column-name="SHIPPING_METHOD" default="Ship to You" required="false" data-type="string" display-name-resource="shippingMethod">
+        <attribute name="resourceBundle" value="atg.commerce.OrderRepositoryTemplateResources"/>
+        <attribute name="propertySortPriority" value="70"/>
+      </property>
+		
+    </table>
+    <table name="dcspp_commerce_item_markers" type="multi" id-column-name="commerce_item_id">
+      <property name="markers" data-type="set" component-item-type="commerceItemMarker" cascade="delete,update"
+        category-resource="markerInfo" display-name-resource="commerceItemMarkers"
+          column-name="marker_id" 	>
+          <attribute name="resourceBundle" value="atg.commerce.markers.MarkerTemplateResources"/>
+      </property>
+    </table>
+  </item-descriptor>
+
+
+</gsa-template>
+<!-- @version $Id: //product/DCS/version/9.0/templates/DCS/config/atg/commerce/order/orderrepository.xml#1 $$Change: 508164 $ -->
