@@ -8,9 +8,6 @@
 		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
 	<dsp:importbean
 		bean="/atg/commerce/order/purchase/StoreCartFormHandler" />
-	<dsp:importbean bean="/atg/formhandler/MyCartModifierFormHandler" />
-	<dsp:importbean bean="/atg/commerce/pricing/ItemPricingEngine" />
-
 	<dsp:importbean bean="/atg/commerce/ShoppingCart" />
 	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
 	<dsp:importbean bean="/atg/dynamo/droplet/ForEach" />
@@ -28,6 +25,10 @@
 					<dsp:param name="noCrumbs" value="true" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b
 						style="color: blue">Current Order</b>
+						 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+						<dsp:a href="home.jsp">
+										<dsp:valueof value="Back to Search" />
+									</dsp:a>
 				</dsp:oparam>
 			</dsp:droplet>
 			</td>
@@ -48,7 +49,7 @@
 							<dsp:form action="cart.jsp" name="testForm" method="post">
 								<table border=1 bordercolor="blue" cellpadding=4 cellspacing=1>
 									<tr bgcolor="lime">
-										<td align=center colspan="1"><span class=smallbw>Delivery
+										<td align=center colspan="1" nowrap="nowrap"><span class=smallbw>Delivery
 										Method</span></td>
 
 										<td align=center colspan=1><span class=smallbw>Name</span></td>
@@ -61,9 +62,6 @@
 									</tr>
 									<dsp:param name="count" value="1" />
 									<%-- get the real shopping cart items --%>
-									<tr>
-										<td><input id="txtDeliveryOption" value="" type="text" /></td>
-									</tr>
 									<dsp:droplet name="ForEach">
 										<dsp:param name="array"
 											bean="ShoppingCart.current.CommerceItems" />
@@ -74,7 +72,7 @@
 
 													<%-- Display part number, product name/link, inventory info columns --%>
 
-													<td colspan="1">
+													<td colspan="1" nowrap="nowrap">
 													<dsp:getvalueof var="fulfillerType" param="CommerceItem.auxiliaryData.catalogRef.fulfillerType"/>
 													<dsp:getvalueof var="sddEnabled" param="CommerceItem.auxiliaryData.catalogRef.sddEnabled"/>
 													<dsp:getvalueof var="webExclusive" param="CommerceItem.auxiliaryData.catalogRef.webExclusive"/>
@@ -82,51 +80,70 @@
 													<dsp:getvalueof var="shippingChargeCode" param="CommerceItem.auxiliaryData.catalogRef.shippingChargeCode"/>
 													<dsp:getvalueof var="loyaltyEligible" param="CommerceItem.auxiliaryData.catalogRef.loyaltyEligible"/>
 													<dsp:getvalueof var="loyaltyRedeemable" param="CommerceItem.auxiliaryData.catalogRef.loyaltyRedeemable"/>
+													<dsp:valueof param="CommerceItem.id"/>:
+													<dsp:valueof bean="ShoppingCart.current.CommerceItems[param:index].shippingMethod"/>
 													<br/>
-													<dsp:valueof param="CommerceItem.id"></dsp:valueof><br/>
 													
 													<%-- Ship To You bean="/atg/commerce/order/ShoppingCartModifier.shippingGroup.shippingMethod" --%>
+													<% 
+													boolean radioSTU=false;
+													boolean radioPU=false;
+													boolean radioSDD=false;
+													%>
 													<c:if test="${webExclusive eq 'Web Only' or webExclusive eq 'Web and Store'}">	
+													<% 
+													radioSTU=true; 
+													%>
 													<dsp:input
-														bean="/atg/commerce/order/CommerceItem.shippingMethod"
+														bean="ShoppingCart.current.CommerceItems[param:index].shippingMethod"
 														value="Ship To You"
-														onchange="txtDeliveryOption.value+=this.value"
+														onchange="<% radioSTU=true; %>"
 														name="<%="Delivery"
 														+ currentItem
 																.toString()%>"
-														type="radio" checked="true"/>
+														type="radio" checked="<%=radioSTU %>"/>
 													<dsp:valueof value="Ship To You" /><br />
 													</c:if>
 													
 														<%-- Pick Up --%>
 													<c:if test="${webExclusive eq 'Store Only' or webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store'}">
+													<% 
+													if(!radioSTU){
+														radioPU=true;
+													}
+													%>
 													<dsp:input
-														bean="/atg/commerce/order/CommerceItem.shippingMethod"
+														bean="ShoppingCart.current.CommerceItems[param:index].shippingMethod"
 														value="Pick Up"
-														onchange="txtDeliveryOption.value+=this.value"
+														onchange="<% radioPU=true; %>"
 														name="<%="Delivery"
 														+ currentItem
 																.toString()%>"
-														type="radio" checked="true"/>
+														type="radio" checked="<%=radioPU%>"/>
 													<dsp:valueof value="Pick Up" /><br />
 													</c:if>
 														<%-- Same Day Delivery --%>
 													<c:if test="${(webExclusive eq 'Web and Store' or webExclusive eq 'Web Pickup and Store') and sddEnabled eq 'true'}">
+													<% 
+													if(!radioSTU && !radioPU){
+														radioSDD=true;
+													}
+													%>
 													<dsp:input
-														bean="/atg/commerce/order/CommerceItem.shippingMethod"
+														bean="ShoppingCart.current.CommerceItems[param:index].shippingMethod"
 														value="Same Day Delivery"
-														onchange="txtDeliveryOption.value+=this.value"
+														onchange="<% radioSDD=true; %>"
 														name="<%="Delivery"
 																	+ currentItem
 																			.toString()%>"
-														type="radio" checked="true">
-													<dsp:setvalue param=""/>
-													</dsp:input><dsp:valueof value="Same Day Delivery" /><br />
+														type="radio" checked="<%=radioSDD%>"/>
+													<dsp:valueof value="Same Day Delivery" /><br />
 													</c:if>
 													</td>
 
 													<%-- Display editable quantity column --%>
-													<td colspan="1"><dsp:param name="prodName"
+													<td colspan="1">
+													<dsp:param name="prodName"
 														param="CommerceItem.auxiliaryData.catalogRef.displayName" />
 													<dsp:a href="displayProdSku.jsp">
 														<dsp:valueof param="prodName" />
@@ -245,7 +262,7 @@
 											</tr>
 											<tr>
 												<dsp:setvalue
-													bean="ShoppingCartModifier.order.priceInfo.shipping"
+													bean="ShoppingCart.current.priceInfo.shipping"
 													value="5.99" />
 												<td>Shipping Charge:</td>
 												<td align="right"><b style="color: blue"> <dsp:valueof
@@ -330,9 +347,11 @@
  	/* stay here */
  %> <%-- CHECKOUT Order button: --%> &nbsp; &nbsp; <dsp:input
 									bean="CartModifierFormHandler.moveToPurchaseInfoByCommerceId"
-									type="submit" value="Checkout" /> <dsp:a href="home.jsp">
-									<dsp:valueof value="Back to Search" />
-								</dsp:a></center>
+									type="submit" value="Checkout" /> 
+									<dsp:a href="home.jsp">
+										<dsp:valueof value="Back to Search" />
+									</dsp:a>
+									</center>
 								<dsp:param name="fromHomePage" value="false" />
 								<%-- If Order is Successful --%>
 								<dsp:input
