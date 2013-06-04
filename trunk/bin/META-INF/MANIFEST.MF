@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: ./jar/velocity-1.5.jar
-

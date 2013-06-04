@@ -46,6 +46,7 @@
 		</dsp:oparam>
 	</dsp:droplet>
 	<dsp:form name="form1" action="order_confirm.jsp" method="post">
+		<dsp:a href="../cart.jsp">Back To Cart</dsp:a>
 		<table cellspacing=0 cellpadding=0 border=1 bgcolor="#B0C4DE"
 			align="center">
 
@@ -328,9 +329,6 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-				<dsp:getvalueof id="order_id" idtype="String" bean="ShoppingCartModifier.order.id">
-				<% request.setAttribute("order_id",order_id); %>
-				</dsp:getvalueof>
 				<dsp:input
 					bean="ShoppingCartModifier.moveToConfirmationSuccessURL"
 					type="hidden" value="order_confirm.jsp" /> <!-- Set the Location to go to if there are error on this form.  We stay on this page and then -->
