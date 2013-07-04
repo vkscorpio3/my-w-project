@@ -260,9 +260,9 @@
 												</dsp:droplet> </b>
 												</td>
 											</tr>
-											<tr>
-												<dsp:setvalue
-													bean="ShoppingCart.current.priceInfo.shipping"
+											<!--<tr>
+												<dsp:input type="hidden"
+													converter="currency" bean="ShoppingCartModifier.order.priceInfo.shipping"
 													value="5.99" />
 												<td>Shipping Charge:</td>
 												<td align="right"><b style="color: blue"> <dsp:valueof
@@ -270,7 +270,7 @@
 													bean="ShoppingCart.current.priceInfo.shipping" /></b> 
 												</td>
 											</tr>
-											<tr>
+											--><tr>
 												<td>Estimated Total:</td>
 												<td align="right"><b style="color: blue"> <dsp:valueof
 													converter="currency"

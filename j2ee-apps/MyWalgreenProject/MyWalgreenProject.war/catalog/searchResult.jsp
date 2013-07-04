@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ page import="atg.servlet.*"%>
 <dsp:page>
-	<dsp:importbean bean="/atg/formhandler/RegistrationFormHandler" />
 	<head>
 	<title>Search Result</title>
 	<style type="text/css">
@@ -95,7 +94,7 @@ function Pager(tableName, itemsPerPage) {
 </script>
 	<h1 align="center">Search Result</h1>
 
-	<dsp:form>
+	<dsp:form id="form1234">
 		<center><dsp:param name="subCategoryId" param="subCategoryId" />
 		<dsp:droplet name="/atg/commerce/catalog/CategoryLookup">
 			<dsp:param name="id" param="subCategoryId" />
@@ -106,12 +105,11 @@ function Pager(tableName, itemsPerPage) {
 						<td style="color: white" align="center"><span class=smallbw><b>Product
 						Image</b></span></td>
 						<td style="color: white" align="center"><b>Product Name</b></td>
-						<td style="color: white" align="center"><b>Availability of Stock</b></td>
+						<td style="color: white" align="center"><b>Availability
+						of Stock</b></td>
 						<td style="color: white" align="center"><b>Product
 						Description</b></td>
-
 					</tr>
-
 					<dsp:droplet name="/atg/dynamo/droplet/ForEach">
 						<tr>
 							<dsp:param name="array" param="element.fixedChildProducts" />

@@ -14,7 +14,6 @@
 	<dsp:importbean bean="/atg/droplet/SearchDroplet" />
 	<dsp:importbean
 		bean="/atg/commerce/order/purchase/CartModifierFormHandler" />
-	<dsp:importbean bean="/atg/commerce/order/ShoppingCartModifier" />
 
 	<dsp:droplet name="/atg/commerce/catalog/ProductLookup">
 		<dsp:param name="id" param="prodId" />
