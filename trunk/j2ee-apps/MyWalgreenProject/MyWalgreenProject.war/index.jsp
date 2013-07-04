@@ -10,10 +10,7 @@
 	</head>
 	<h1>MyWalgreenProject Test JSP Page</h1>
 
-	<dsp:getvalueof id="backcolor" bean="LoginFormHandler.color" scope="page"/>
-
-	<dsp:form>
-
+	<dsp:form action="index.jsp">
 
 		<dsp:droplet name="/atg/dynamo/droplet/ErrorMessageForEach">
 			<dsp:param name="exceptions" bean="LoginFormHandler.formExceptions" />
@@ -23,20 +20,10 @@
 			</dsp:oparam>
 		</dsp:droplet>
 		
-		<dsp:input bean="LoginFormHandler.color" type="text" />
+		<dsp:input bean="LoginFormHandler.checked" type="checkbox">Check Me</dsp:input>
 		<dsp:input bean="LoginFormHandler.submit" type="submit" />
-		
+		<br/>
+		<dsp:valueof bean="LoginFormHandler.checked"></dsp:valueof>		
 	</dsp:form>
-		Selected Color:
-	<b><c:out value="${backcolor}"></c:out></b>
-		<br>
-
-
-	<body bgcolor="${backcolor}">
-		
-	<dsp:setvalue param="backcolor" value="red" />
-	<p>My Color:</p>
-	<dsp:valueof param="backcolor"></dsp:valueof>
-	</body>
 </dsp:page>
 <%-- @version $Id: //product/Eclipse/main/plugins/atg.project/templates/index.jsp#1 $$Change: 425088 $--%>
